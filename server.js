@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -29,5 +30,5 @@ app.all('*', (req, res) => {
 })
 
 app.use(errorHandler)
-
+console.log(process.env.NODE_ENV)
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
