@@ -2,17 +2,17 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
-const PORT = process.env.PORT || 3500
 const router = require('./router/root')
 const { logger } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
-const connectDB = require('./config/dbConn')
+const bootUp = require('./config/boot')
 const mongoose = require('mongoose')
 
 
-connectDB()
+
+
 
 
 app.use(cors(corsOptions))
@@ -35,22 +35,5 @@ app.all('*', (req, res) => {
 
 
 app.use(errorHandler)
-// console.log(process.env.NODE_ENV)
-// try {
-//     mongoose.connection.once('open',app.listen(PORT,() => console.log(`Server running on port ${PORT}`)))
-// } catch (error) {
-//     console.log(error)
-// }
+bootUp()
 
-// try {
-//      mongoose.connect(process.env.DATABASE_URI)
-// } catch (err) {
-//     console.log(err)
-// }
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB')
-   
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
-})
-
-//  app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
